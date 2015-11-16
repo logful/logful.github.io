@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>User Guide - Logful</title>
+  <title>About - Logful</title>
   
 
   <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -20,7 +20,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "User Guide";
+    var mkdocs_page_name = "About";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -113,28 +113,15 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">User Guide</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#ios-guide">iOS Guide</a></li>
-                
-                    <li><a class="toctree-l4" href="#logful">Logful配置</a></li>
-                
-                    <li><a class="toctree-l4" href="#logger">Logger定义</a></li>
-                
-                    <li><a class="toctree-l4" href="#_1">日志主动管理</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../../ios/guide/">User Guide</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../api/">API Reference</a>
+        <a class="" href="../../ios/api/">API Reference</a>
         
     </li>
 
@@ -157,8 +144,21 @@
 <li>
           
             <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../../about/about/">About</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">About</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#logful">关于Logful</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#_1">关于个推</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#getuilab">关于GetuiLab</a></li>
+                
+            
+            </ul>
         
     </li>
 <li>
@@ -184,12 +184,8 @@
     <li><a href="../..">Docs</a> &raquo;</li>
     
       
-        
-          <li>iOS &raquo;</li>
-        
-      
     
-    <li>User Guide</li>
+    <li>About</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -199,19 +195,13 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="ios-guide">iOS Guide</h1>
-<p>iOS平台更多功能说明</p>
-<h2 id="logful">Logful配置</h2>
-<h2 id="logger">Logger定义</h2>
-<h2 id="_1">日志主动管理</h2>
-<p>大多数情况下，App无需主动对Logful的日志管理功能进行直接操作。不过在特定情况下，App还是可以通过Logful SDK提供的接口实现日志开关以及日志主动上传功能。目前主要通过以下接口实现：</p>
-<ul>
-<li>turnOnLog()</li>
-<li>turnOffLog()</li>
-<li>syncLog()</li>
-<li>interruptThenSync()</li>
-</ul>
-<p>需要注意的是，<code>interruptThenSync</code>需要谨慎使用。大量使用<code>interruptThenSync</code>会产生很多的小日志文件，可能会对服务端性能造成影响。</p>
+                <h3 id="logful">关于Logful</h3>
+<p>Logful还能年轻，还有很多需要完善的地方。如果你对这个项目有什么想法和建议，或者你希望参与到这个项目中来，欢迎联系 <a href="mailto:dongl@getui.com">@dwelling</a> <a href="mailto:caokd@getui.com">@keithellis</a> <a href="mailto:lvgx@getui.com">@xiangzilv</a> </p>
+<h3 id="_1">关于个推</h3>
+<p>个推是国内最专业的第三方消息推送技术服务商，提供安卓推送（Android）及iOS推送SDK，使APP快速集成云推送功能，免去开发成本，有效提高产品活跃度与用户体验。个推还提供智能推送服务(Smart Push)，通过属性分析与推送测试的功能，帮助找到APP用户中最精准的人群，摒弃盲目推送技术，从而进行精细化运营。个推为企业提供企业级的解决方案，帮助应用开发商快捷、高效的建立自己的推送服务系统，从而专注业务，快速融入市场。</p>
+<p>更多详情，请移步至 <a href="http://www.getui.com">www.getui.com</a></p>
+<h3 id="getuilab">关于GetuiLab</h3>
+<p>个推实验室致力于为移动应用开发者提供开源的、便利的工具，推广高效高质的研发流程，为专注于移动应用开发的xdjm们出一份力。</p>
               
             </div>
           </div>
@@ -219,10 +209,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../api/" class="btn btn-neutral float-right" title="API Reference"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../../android/api/" class="btn btn-neutral" title="API Reference"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../news/news/" class="btn btn-neutral" title="News"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -248,10 +236,8 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../android/api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../news/news/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../api/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
