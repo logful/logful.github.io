@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Start Logging - Logful</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Start Logging";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Logful</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Get Started</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../install/">Installation</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Start Logging</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#start-logging">Start Logging</a></li>
+                
+                    <li><a class="toctree-l4" href="#android-studio">Android Studio集成</a></li>
+                
+                    <li><a class="toctree-l4" href="#ios-xcode">iOS Xcode集成</a></li>
+                
+                    <li><a class="toctree-l4" href="#_1">日志检索和管理</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../essentials/">Essentials</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Android</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../android/guide/">User Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../android/api/">API Reference</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>iOS</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ios/guide/">User Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ios/api/">API Reference</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../web/guide/">Web</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Logful</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Get Started &raquo;</li>
+        
+      
+    
+    <li>Start Logging</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="start-logging">Start Logging</h1>
+<p>完成了Logful日志服务部署，接下来就可以在客户端进行日志记录了。在本节中，您可以看到如何在Android和iOS客户端中正确集成Logful SDK，并进行日志记录工作。同时在本节最后，可以看到日志如何在服务端被查询、检索和使用。</p>
+<h2 id="android-studio">Android Studio集成</h2>
+<p>首先在build.gradle中添加logful的库文件依赖：</p>
+<pre><code>dependencies {
+    ...
+    compile('com.getui:logful:0.2.0')
+    ...
+}
+</code></pre>
+
+<p>在assets中放置<code>logful.properties</code>文件，配置Logful API日志服务地址：</p>
+<pre><code>baseUrl=http://&lt;logful-api-hostname&gt;:9600
+</code></pre>
+
+<p>在应用初始化代码中对Logful SDK进行初始化：</p>
+<pre><code class="java">import android.app.Application;
+
+import com.getui.logful.LoggerConfigurator;
+import com.getui.logful.LoggerFactory;
+import com.getui.logful.annotation.LogProperties;
+
+public class MainApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        // Logful初始化
+        LoggerFactory.init(this);
+    }
+}
+</code></pre>
+
+<p>然后就可以在需要进行日志记录的地方打日志了：</p>
+<pre><code class="java">// 使用默认logger
+LoggerFactory.debug(&quot;tag&quot;, &quot;some|debug|message&quot;);
+</code></pre>
+
+<p>或者在特定的代码点进行截图捕获：</p>
+<pre><code class="java">// 第三个参数为true表示需要同时进行截图保存
+LoggerFactory.verbose(&quot;tag&quot;, &quot;some|key|checkpoint&quot;, true);
+</code></pre>
+
+<p>编译运行后，日志便会定期上传至服务端（默认为每小时上传一次）</p>
+<h2 id="ios-xcode">iOS Xcode集成</h2>
+<p>(待完善@caokd)</p>
+<h2 id="_1">日志检索和管理</h2>
+<p>日志文件上传至服务端后，即可使用Logful Web以及Graylog提供的日志检索功能，进行日志定位。</p>
+<p>通过Logful Web，可以基于IMEI查询UID：</p>
+<p><img alt="查询UID" src="../../img/logful_uid.png" /></p>
+<p>然后根据UID以及日期，查询所有的日志记录：</p>
+<p><img alt="查询日志" src="../../img/logful_querylog.png" /></p>
+<p>点击日志文件右侧的<code>View</code>，即可在线浏览完整的日志记录：</p>
+<p><img alt="日志浏览" src="../../img/logful_viewlog.png" /></p>
+<p>除了Logful Web，也可以在Graylog上进行更为强大的日志检索。例如，根据package name检索所有相关的日志记录：</p>
+<p><img alt="日志检索" src="../../img/logful_search1.png" /></p>
+<p>或者检索错误ID为<code>80001</code>的日志记录：</p>
+<p><img alt="日志检索" src="../../img/logful_search2.png" /></p>
+<p>甚至可以根据特定字段的数值，生成专有的实时数据图表：</p>
+<p><img alt="日志监控" src="../../img/logful_monitor.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../essentials/" class="btn btn-neutral float-right" title="Essentials"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../install/" class="btn btn-neutral" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../install/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../essentials/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
