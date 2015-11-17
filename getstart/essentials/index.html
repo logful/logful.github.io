@@ -204,16 +204,63 @@
             <div class="section">
               
                 <h1 id="essentials">Essentials</h1>
-<p>通过前面的Step-by-Step示例，您应该已经初步了解了Logful是怎样运作的。当然，这些并非是全部。在继续了解Android、iOS和Web侧更多内容前，有必要先一些重要的、共性的技术内容。</p>
+<p>通过前面的 Step-by-step 示例，您应该已经初步了解了 Logful 是怎样运作的。当然，这些并非是全部。在继续了解 Android、iOS 和 Web 侧更多内容前，有必要先一些重要的、共性的技术内容。</p>
 <h2 id="uid">UID</h2>
 <h2 id="_1">日志级别</h2>
+<ul>
+<li>
+<p><code>verbose</code> <code>level</code> <code>1</code> 详细的日志信息</p>
+</li>
+<li>
+<p><code>debug</code> <code>level</code> <code>2</code> 程序运行 debug 信息</p>
+</li>
+<li>
+<p><code>info</code> <code>level</code> <code>3</code> 程序运行时信息</p>
+</li>
+<li>
+<p><code>warn</code> <code>level</code> <code>4</code> 关键的警告信息</p>
+</li>
+<li>
+<p><code>error</code> <code>level</code> <code>5</code> 记录程序未按照预定逻辑执行的错误</p>
+</li>
+<li>
+<p><code>exception</code> <code>level</code> <code>6</code> 记录重要的程序运行异常信息</p>
+</li>
+<li>
+<p><code>fatal</code> <code>level</code> <code>7</code> 程序无法继续正常运行的严重错误</p>
+</li>
+</ul>
 <h2 id="_2">日志模板</h2>
+<p>模板内容</p>
+<p><code>s,status_code,%n|r,response,%s</code></p>
+<p>消息内容</p>
+<p><code>s:201|r:{"result":0, "message":"some message"}|extra_message|t:timestamp</code></p>
+<p>解析结果</p>
+<pre><code>col_status_code: 201
+col_response: &quot;{'result':0, 'message':'some message'}&quot;
+col_2: &quot;extra_message&quot;
+col_3: &quot;t:timestamp&quot;
+</code></pre>
+
+<p>解析规则</p>
+<ul>
+<li><code>模板解析</code> 程序会先使用 “|” 进行分隔，再对分隔得到的每个数组元素使用 “,” 进行分隔得到大小为 3 的数组，数组中的第一个元素代表第二个元素的缩写，第二个元素为完整的字符串，第三个元素代表内容的类型：“%s” 为字符串类型，“%n” 为数值类型。解析得到的结果会暂时存储到内存中，供解析消息用。</li>
+<li><code>消息解析</code> 程序去检查字符串中是否存在 “|”：<ol>
+<li>如果存在则使用 “|” 进行分隔得到子字符串数组，遍历数组元素，记录 index，判断元素中是否存在 “:”：<ol>
+<li>如果存在则使用第一个 “:” 进行分隔得到大小为 2 的数组，以第一个元素作为 key，从模板中查询是否存在，如果存在用设置的完整字符串加前缀 col_ 替换当前的 key 作为 field 的自定义字段，不存在则使用 col_ 加上当前 index 作为 field 的自定义字段。<code>q-1-1</code></li>
+<li>如果不存在则使用 col_ 加上当前 index 作为 field 的自定义字段。<code>q-1-2</code></li>
+</ol>
+</li>
+<li>如果不存在，判断字符串中是否包含 “:”：重复以上 <code>q-1-1</code> 和 <code>q-1-2</code> 步骤。</li>
+</ol>
+</li>
+</ul>
 <h2 id="_3">别名支持</h2>
 <h2 id="_4">更多内容</h2>
-<p>关于Android平台更多内容，请移步至 <a href="../../android/guide/">Android Guide</a></p>
-<p>关于Android平台更多内容，请移步至 <a href="../../ios/guide/">iOS Guide</a></p>
-<p>关于Logful Web更多功能，请移步至 <a href="../../web/guide/">Logful Web Guide</a></p>
-<p>关于Graylog使用方面更多内容，请移步至 <a href="http://docs.graylog.org/en/1.2/">Graylog Documentation</a></p>
+<p>关于 Android 平台更多内容，请移步至 <a href="../../android/guide/">Android Guide</a></p>
+<p>关于 Android 平台更多内容，请移步至 <a href="../../ios/guide/">iOS Guide</a></p>
+<p>关于 Logful Web 更多功能，请移步至 <a href="../../web/guide/">Logful Web Guide</a></p>
+<p>关于 Graylog 使用方面更多内容，请移步至 <a href="http://docs.graylog.org/en/1.2/">Graylog Documentation</a></p>
               
             </div>
           </div>

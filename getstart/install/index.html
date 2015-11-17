@@ -69,13 +69,13 @@
             
                 <li class="toctree-l3"><a href="#installation">Installation</a></li>
                 
-                    <li><a class="toctree-l4" href="#graylog">Graylog部署</a></li>
+                    <li><a class="toctree-l4" href="#graylog">Graylog 部署</a></li>
                 
-                    <li><a class="toctree-l4" href="#weedfs">WeedFS部署</a></li>
+                    <li><a class="toctree-l4" href="#weedfs">WeedFS 部署</a></li>
                 
-                    <li><a class="toctree-l4" href="#logful-api">Logful API服务部署</a></li>
+                    <li><a class="toctree-l4" href="#logful-api">Logful API 服务部署</a></li>
                 
-                    <li><a class="toctree-l4" href="#logful-web">Logful Web服务部署</a></li>
+                    <li><a class="toctree-l4" href="#logful-web">Logful Web 服务部署</a></li>
                 
             
             </ul>
@@ -202,22 +202,120 @@
             <div class="section">
               
                 <h1 id="installation">Installation</h1>
-<p>在本节中，您将了解如何在服务端部署所有Logful所需的组件，并将组件正确连接起来。在正式部署服务前，确保您已经对Logful日志系统架构有了充分了解。建议先阅读<a href="../../">Logful的介绍</a>后，再开始部署工作。</p>
+<p>在本节中，您将了解如何在服务端部署所有 Logful 所需的组件，并将组件正确连接起来。在正式部署服务前，确保您已经对 Logful 日志系统架构有了充分了解。建议先阅读<a href="../../"> Logful  的介绍</a>后，再开始部署工作。</p>
 <p>部署流程包括：</p>
 <ul>
-<li>Graylog部署</li>
-<li>WeedFS部署</li>
-<li>Logful API服务部署</li>
-<li>Logful Web服务部署</li>
+<li>Graylog 部署</li>
+<li>WeedFS 部署</li>
+<li>Logful API 服务部署</li>
+<li>Logful Web 服务部署</li>
 </ul>
-<h2 id="graylog">Graylog部署</h2>
-<p>(待完善@caokd)</p>
-<h2 id="weedfs">WeedFS部署</h2>
-<p>(待完善@caokd)</p>
-<h2 id="logful-api">Logful API服务部署</h2>
-<p>(待完善@caokd)</p>
-<h2 id="logful-web">Logful Web服务部署</h2>
-<p>(待完善@caokd)</p>
+<h2 id="graylog">Graylog 部署</h2>
+<p>以 CentOS 7 使用 yum 安装 Graylog-1.2 版本为例：</p>
+<h3 id="graylog-server-graylog-web">安装 graylog-server 和 graylog-web</h3>
+<pre><code class="bash">$ sudo rpm -Uvh https://packages.graylog2.org/repo/packages/graylog-1.2-repository-el7_latest.rpm
+$ sudo yum install graylog-server graylog-web
+</code></pre>
+
+<h3 id="elasticsearch">安装 Elasticsearch</h3>
+<p>graylog-server 要求 Elasticsearch 版本为 1.7 及以上（2.x 暂时不支持）。</p>
+<pre><code class="bash">$ sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+$ sudo vim /etc/yum.repos.d/elasticsearch.repo
+
+[elasticsearch-1.7]
+name=Elasticsearch repository for 1.7.x packages
+baseurl=http://packages.elastic.co/elasticsearch/1.7/centos
+gpgcheck=1
+gpgkey=http://packages.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+
+$ yum install elasticsearch
+</code></pre>
+
+<h3 id="mongodb">安装 MongoDB</h3>
+<p>graylog-server 要求尽可能使用稳定版本，且版本至少为 v2.0。</p>
+<pre><code class="bash">$ sudo vim /etc/yum.repos.d/mongodb-org-3.0.repo
+
+[mongodb-org-3.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.0/x86_64/
+gpgcheck=0
+enabled=1
+
+$ sudo yum install -y mongodb-org
+</code></pre>
+
+<h3 id="graylog-server-graylog-web_1">配置 graylog-server 和 graylog-web</h3>
+<pre><code class="bash">$ pwgen -N 1 -s 96
+PASSWORD_SECRET
+
+$ echo -n getui2015! | sha256sum
+PASSWORD_SHA
+
+$ sudo vim /etc/graylog/server/server.conf
+
+password_secret = PASSWORD_SECRET
+root_password_sha2 = PASSWORD_SHA
+root_timezone = Asia/Shanghai
+
+$ sudo vim /etc/graylog/web/web.conf
+
+application.secret=&quot;PASSWORD_SECRET&quot;
+timezone=&quot;Asia/Shanghai&quot;
+</code></pre>
+
+<h3 id="elasticsearch_1">配置 Elasticsearch</h3>
+<pre><code class="bash">$ sudo vim /etc/elasticsearch/elasticsearch.yml
+
+cluster.name: graylog2
+</code></pre>
+
+<h3 id="_1">启动所有服务</h3>
+<pre><code class="bash">$ sudo service mongod start
+$ sudo service elasticsearch start
+$ sudo systemctl start graylog-server
+$ sudo systemctl start graylog-web
+</code></pre>
+
+<h3 id="graylog-gelf-tcp-input">创建 Graylog GELF TCP input</h3>
+<p>登陆 graylog-web http://example.com:9000</p>
+<p>System-&gt;Inputs-&gt;Select "GELF TCP"-&gt;Launch new input-&gt;Start input</p>
+<p><img alt="GELF TCP input" src="../../img/logful_gelf_tcp_input.png" /></p>
+<h2 id="weedfs">WeedFS 部署</h2>
+<p>根据当前操作系统版本选择相应的 SeaweedFS 二进制包，以 Linux 64-bit，weed 0.69 版本为例：</p>
+<pre><code class="bash">$ cd ~
+$ wget https://github.com/chrislusf/seaweedfs/releases/download/v0.69/weed_0.69_linux_amd64.tar.gz
+$ tar -zxvf weed_0.69_linux_amd64.tar.gz
+$ cd weed_0.69_linux_amd64
+$ cp weed /usr/local/bin
+$ chmod +X /usr/local/bin/weed
+$ mkdir /var/log/weed
+$ mkdir /path/to/weed/volume
+$ nohup weed -log_dir=&quot;/var/log/weed&quot; -v=4 server -dir=&quot;/path/to/weed/volume&quot; -master.port=9333 -master.volumeSizeLimitMB=30000 -volume.port=8083 -volume.max=&quot;7&quot; -pulseSeconds=60 -idleTimeout=86400 &amp;
+</code></pre>
+
+<p>更多详细启动参数请查看 <a href="https://github.com/chrislusf/seaweedfs/wiki">SeaweedFS wiki</a></p>
+<h2 id="logful-api">Logful API 服务部署</h2>
+<pre><code class="bash">$ cd /path
+$ wget https://github.com/logful/logful-api/releases/download/v0.2.0-beta/logful-api-0.2.0-beta.zip
+$ unzip logful-api-0.2.0-beta.zip
+$ cd logful-api-0.2.0-beta
+$ vim application.conf
+...
+$ nohup java -Xms512m -Xmx1024m -jar logful-api-0.2.0-beta.jar --spring.config.location=/path/logful-api-0.2.0-beta/application.conf &amp;
+</code></pre>
+
+<h2 id="logful-web">Logful Web 服务部署</h2>
+<pre><code class="bash">$ npm install pm2 -g
+$ cd /path
+$ wget https://github.com/logful/logful-web/releases/download/v0.2.0-beta/logful-web-0.2.0-beta.zip
+$ unzip logful-web-0.2.0-beta.zip
+$ cd logful-web-0.2.0-beta
+$ npm install
+$ vim config/config.js
+...
+$ pm2 start app.js
+</code></pre>
               
             </div>
           </div>
