@@ -95,6 +95,13 @@
     </li>
 
         
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../demo/">Demo</a>
+        
+    </li>
+
+        
     </ul>
 <li>
           
@@ -278,7 +285,7 @@ $ git submodule update --init --recursive
 <p>在项目Linked Frameworks and Libraries设置中添加以下依赖：
 libsqlite3、libz、MobileCoreServices.framework、SystemConfiguration.framework、Openssl.framework。</p>
 <h3 id="logful-ios-sdk">使用 Logful iOS SDK<a class="headerlink" href="#logful-ios-sdk" title="Permanent link">&para;</a></h3>
-<p>初始化 SDK：</p>
+<p>初始化 SDK，配置logful API地址：</p>
 <pre><code class="objc">#import &quot;AppDelegate.h&quot;
 #import &lt;Logful/Logful.h&gt;
 
@@ -291,6 +298,7 @@ libsqlite3、libz、MobileCoreServices.framework、SystemConfiguration.framework
 - (BOOL)application:(UIApplication *)application 
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [GTLoggerFactory init];
+    [GTLoggerFactory setApiUrl:@&quot;http://demo.logful.aoapp.com:9600&quot;];
     return YES;
 }
 </code></pre>
