@@ -120,9 +120,9 @@
             
                 <li class="toctree-l3"><a href="#ios-guide">iOS Guide</a></li>
                 
-                    <li><a class="toctree-l4" href="#logful">Logful配置</a></li>
+                    <li><a class="toctree-l4" href="#logful">Logful 配置</a></li>
                 
-                    <li><a class="toctree-l4" href="#logger">Logger定义</a></li>
+                    <li><a class="toctree-l4" href="#logger">Logger 定义</a></li>
                 
                     <li><a class="toctree-l4" href="#_1">日志主动管理</a></li>
                 
@@ -199,19 +199,58 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="ios-guide">iOS Guide</h1>
+                <h1 id="ios-guide">iOS Guide<a class="headerlink" href="#ios-guide" title="Permanent link">&para;</a></h1>
 <p>iOS平台更多功能说明</p>
-<h2 id="logful">Logful配置</h2>
-<h2 id="logger">Logger定义</h2>
-<h2 id="_1">日志主动管理</h2>
-<p>大多数情况下，App无需主动对Logful的日志管理功能进行直接操作。不过在特定情况下，App还是可以通过Logful SDK提供的接口实现日志开关以及日志主动上传功能。目前主要通过以下接口实现：</p>
+<h2 id="logful">Logful 配置<a class="headerlink" href="#logful" title="Permanent link">&para;</a></h2>
+<h3 id="logfilemaxsize">logFileMaxSize<a class="headerlink" href="#logfilemaxsize" title="Permanent link">&para;</a></h3>
+<p>单个日志文件最大容量（单位：字节）。</p>
+<p><strong>default</strong>: <code>524288</code></p>
+<h3 id="uploadnetworktype">uploadNetworkType<a class="headerlink" href="#uploadnetworktype" title="Permanent link">&para;</a></h3>
+<p>允许用户上传日志的网络类型。</p>
+<p><strong>default</strong>: </p>
+<pre><code class="objc">@[ @(NETWORK_TYPE_WIFI), @(NETWORK_TYPE_WWAN) ]
+</code></pre>
+
+<h3 id="uploadloglevel">uploadLogLevel<a class="headerlink" href="#uploadloglevel" title="Permanent link">&para;</a></h3>
+<p>需要用户上传的日志级别。</p>
+<p><strong>default</strong>: </p>
+<pre><code class="objc">@[ @(LEVEL_VERBOSE), @(LEVEL_DEBUG), @(LEVEL_INFO), @(LEVEL_WARN), @(LEVEL_ERROR), @(LEVEL_EXCEPTION),@(LEVEL_FATAL) ]
+</code></pre>
+
+<h3 id="deleteuploadedlogfile">deleteUploadedLogFile<a class="headerlink" href="#deleteuploadedlogfile" title="Permanent link">&para;</a></h3>
+<p>是否删除已经上传的日志文件。</p>
+<p><strong>default</strong>: <code>NO</code></p>
+<h3 id="activelogwriter">activeLogWriter<a class="headerlink" href="#activelogwriter" title="Permanent link">&para;</a></h3>
+<p>同时写入的日志文件数量。</p>
+<p><strong>default</strong>: <code>2</code></p>
+<h3 id="activeuploadtask">activeUploadTask<a class="headerlink" href="#activeuploadtask" title="Permanent link">&para;</a></h3>
+<p>同时上传的文件数量。</p>
+<p><strong>default</strong>: <code>2</code></p>
+<h3 id="defaultloggername">defaultLoggerName<a class="headerlink" href="#defaultloggername" title="Permanent link">&para;</a></h3>
+<p>默认的 logger 名称。</p>
+<p><strong>default</strong>: <code>app</code></p>
+<h3 id="defaultmsglayout">defaultMsgLayout<a class="headerlink" href="#defaultmsglayout" title="Permanent link">&para;</a></h3>
+<p>默认的日志消息模板。</p>
+<p><strong>default</strong>: <code>""</code></p>
+<h3 id="screenshotquality">screenshotQuality<a class="headerlink" href="#screenshotquality" title="Permanent link">&para;</a></h3>
+<p>屏幕截图压缩质量（范围：1 ~ 100）。</p>
+<p><strong>default</strong>: <code>80</code></p>
+<h3 id="screenshotscale">screenshotScale<a class="headerlink" href="#screenshotscale" title="Permanent link">&para;</a></h3>
+<p>屏幕截图缩放比例（范围：0.1 ~ 1.0）。</p>
+<p><strong>default</strong>: <code>0.5</code></p>
+<h2 id="logger">Logger 定义<a class="headerlink" href="#logger" title="Permanent link">&para;</a></h2>
+<pre><code class="objc">GTLogger *logger = [GTLoggerFactory logger:@&quot;your_logger_name&quot;];
+</code></pre>
+
+<h2 id="_1">日志主动管理<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>大多数情况下，App 无需主动对 Logful 的日志管理功能进行直接操作。不过在特定情况下，App 还是可以通过 Logful SDK 提供的接口实现日志开关以及日志主动上传功能。目前主要通过以下接口实现：</p>
 <ul>
 <li>turnOnLog()</li>
 <li>turnOffLog()</li>
 <li>syncLog()</li>
 <li>interruptThenSync()</li>
 </ul>
-<p>需要注意的是，<code>interruptThenSync</code>需要谨慎使用。大量使用<code>interruptThenSync</code>会产生很多的小日志文件，可能会对服务端性能造成影响。</p>
+<p>需要注意的是，<code>interruptThenSync</code> 需要谨慎使用。大量使用 <code>interruptThenSync</code> 会产生很多的小日志文件，可能会对服务端性能造成影响。</p>
               
             </div>
           </div>

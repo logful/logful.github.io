@@ -199,9 +199,9 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="start-logging">Start Logging</h1>
+                <h1 id="start-logging">Start Logging<a class="headerlink" href="#start-logging" title="Permanent link">&para;</a></h1>
 <p>完成了 Logful 日志服务部署，接下来就可以在客户端进行日志记录了。在本节中，您可以看到如何在 Android 和 iOS 客户端中正确集成 Logful SDK，并进行日志记录工作。同时在本节最后，可以看到日志如何在服务端被查询、检索和使用。</p>
-<h2 id="android-studio">Android Studio 集成</h2>
+<h2 id="android-studio">Android Studio 集成<a class="headerlink" href="#android-studio" title="Permanent link">&para;</a></h2>
 <p>首先在 build.gradle 中添加 logful 的库文件依赖：</p>
 <pre><code>dependencies {
     ...
@@ -244,8 +244,8 @@ LoggerFactory.verbose(&quot;tag&quot;, &quot;some|key|checkpoint&quot;, true);
 </code></pre>
 
 <p>编译运行后，日志便会定期上传至服务端（默认为每小时上传一次）</p>
-<h2 id="ios-xcode">iOS Xcode 集成</h2>
-<h3 id="cocoapods">CocoaPods 集成</h3>
+<h2 id="ios-xcode">iOS Xcode 集成<a class="headerlink" href="#ios-xcode" title="Permanent link">&para;</a></h2>
+<h3 id="cocoapods">CocoaPods 集成<a class="headerlink" href="#cocoapods" title="Permanent link">&para;</a></h3>
 <p>如果还没有安装 CocoaPods，请在终端执行如下指令进行安装：</p>
 <pre><code class="bash">$ sudo gem install cocoapods
 $ pod setup
@@ -267,7 +267,7 @@ pod 'Logful', '~&gt; 0.2.0'
 <pre><code class="bash">$ open YourProject.xcworkspace
 </code></pre>
 
-<h3 id="_1">直接添加工程集成</h3>
+<h3 id="_1">直接添加工程集成<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <p>把 Logful iOS SDK 添加为 submodule：</p>
 <pre><code class="bash">$ cd /path/to/YourProject
 $ git submodule add git@github.com:logful/logful-ios.git
@@ -275,7 +275,7 @@ $ git submodule update --init --recursive
 </code></pre>
 
 <p>添加 libsqlite3、libz、MobileCoreServices.framework、SystemConfiguration.framework、Openssl.framework。</p>
-<h3 id="logful-ios-sdk">使用 Logful iOS SDK</h3>
+<h3 id="logful-ios-sdk">使用 Logful iOS SDK<a class="headerlink" href="#logful-ios-sdk" title="Permanent link">&para;</a></h3>
 <p>初始化 SDK：</p>
 <pre><code class="objc">#import &quot;AppDelegate.h&quot;
 #import &lt;Logful/Logful.h&gt;
@@ -310,7 +310,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 GLOG_DEBUG_CAPTURE(@&quot;TAG&quot;, @&quot;debug message&quot;);
 </code></pre>
 
-<h2 id="_2">日志检索和管理</h2>
+<h2 id="_2">日志检索和管理<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>日志文件上传至服务端后，即可使用 Logful Web 以及 Graylog 提供的日志检索功能，进行日志定位。</p>
 <p>通过 Logful Web，可以基于 IMEI 查询 UID：</p>
 <p><img alt="查询 UID" src="../../img/logful_uid.png" /></p>

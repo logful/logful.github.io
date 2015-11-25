@@ -201,7 +201,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="installation">Installation</h1>
+                <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h1>
 <p>在本节中，您将了解如何在服务端部署所有 Logful 所需的组件，并将组件正确连接起来。在正式部署服务前，确保您已经对 Logful 日志系统架构有了充分了解。建议先阅读<a href="../../"> Logful  的介绍</a>后，再开始部署工作。</p>
 <p>部署流程包括：</p>
 <ul>
@@ -210,14 +210,14 @@
 <li>Logful API 服务部署</li>
 <li>Logful Web 服务部署</li>
 </ul>
-<h2 id="graylog">Graylog 部署</h2>
+<h2 id="graylog">Graylog 部署<a class="headerlink" href="#graylog" title="Permanent link">&para;</a></h2>
 <p>以 CentOS 7 使用 yum 安装 Graylog-1.2 版本为例：</p>
-<h3 id="graylog-server-graylog-web">安装 graylog-server 和 graylog-web</h3>
+<h3 id="graylog-server-graylog-web">安装 graylog-server 和 graylog-web<a class="headerlink" href="#graylog-server-graylog-web" title="Permanent link">&para;</a></h3>
 <pre><code class="bash">$ sudo rpm -Uvh https://packages.graylog2.org/repo/packages/graylog-1.2-repository-el7_latest.rpm
 $ sudo yum install graylog-server graylog-web
 </code></pre>
 
-<h3 id="elasticsearch">安装 Elasticsearch</h3>
+<h3 id="elasticsearch">安装 Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permanent link">&para;</a></h3>
 <p>graylog-server 要求 Elasticsearch 版本为 1.7 及以上（2.x 暂时不支持）。</p>
 <pre><code class="bash">$ sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
 $ sudo vim /etc/yum.repos.d/elasticsearch.repo
@@ -232,7 +232,7 @@ enabled=1
 $ yum install elasticsearch
 </code></pre>
 
-<h3 id="mongodb">安装 MongoDB</h3>
+<h3 id="mongodb">安装 MongoDB<a class="headerlink" href="#mongodb" title="Permanent link">&para;</a></h3>
 <p>graylog-server 要求尽可能使用稳定版本，且版本至少为 v2.0。</p>
 <pre><code class="bash">$ sudo vim /etc/yum.repos.d/mongodb-org-3.0.repo
 
@@ -245,7 +245,7 @@ enabled=1
 $ sudo yum install -y mongodb-org
 </code></pre>
 
-<h3 id="graylog-server-graylog-web_1">配置 graylog-server 和 graylog-web</h3>
+<h3 id="graylog-server-graylog-web_1">配置 graylog-server 和 graylog-web<a class="headerlink" href="#graylog-server-graylog-web_1" title="Permanent link">&para;</a></h3>
 <pre><code class="bash">$ pwgen -N 1 -s 96
 PASSWORD_SECRET
 
@@ -264,24 +264,24 @@ application.secret=&quot;PASSWORD_SECRET&quot;
 timezone=&quot;Asia/Shanghai&quot;
 </code></pre>
 
-<h3 id="elasticsearch_1">配置 Elasticsearch</h3>
+<h3 id="elasticsearch_1">配置 Elasticsearch<a class="headerlink" href="#elasticsearch_1" title="Permanent link">&para;</a></h3>
 <pre><code class="bash">$ sudo vim /etc/elasticsearch/elasticsearch.yml
 
 cluster.name: graylog2
 </code></pre>
 
-<h3 id="_1">启动所有服务</h3>
+<h3 id="_1">启动所有服务<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <pre><code class="bash">$ sudo service mongod start
 $ sudo service elasticsearch start
 $ sudo systemctl start graylog-server
 $ sudo systemctl start graylog-web
 </code></pre>
 
-<h3 id="graylog-gelf-tcp-input">创建 Graylog GELF TCP input</h3>
+<h3 id="graylog-gelf-tcp-input">创建 Graylog GELF TCP input<a class="headerlink" href="#graylog-gelf-tcp-input" title="Permanent link">&para;</a></h3>
 <p>登陆 graylog-web http://example.com:9000</p>
 <p>System-&gt;Inputs-&gt;Select "GELF TCP"-&gt;Launch new input-&gt;Start input</p>
 <p><img alt="GELF TCP input" src="../../img/logful_gelf_tcp_input.png" /></p>
-<h2 id="weedfs">WeedFS 部署</h2>
+<h2 id="weedfs">WeedFS 部署<a class="headerlink" href="#weedfs" title="Permanent link">&para;</a></h2>
 <p>根据当前操作系统版本选择相应的 SeaweedFS 二进制包，以 Linux 64-bit，weed 0.69 版本为例：</p>
 <pre><code class="bash">$ cd ~
 $ wget https://github.com/chrislusf/seaweedfs/releases/download/v0.69/weed_0.69_linux_amd64.tar.gz
@@ -291,11 +291,50 @@ $ cp weed /usr/local/bin
 $ chmod +X /usr/local/bin/weed
 $ mkdir /var/log/weed
 $ mkdir /path/to/weed/volume
-$ nohup weed -log_dir=&quot;/var/log/weed&quot; -v=4 server -dir=&quot;/path/to/weed/volume&quot; -master.port=9333 -master.volumeSizeLimitMB=30000 -volume.port=8083 -volume.max=&quot;7&quot; -pulseSeconds=60 -idleTimeout=86400 &amp;
+$ weed -log_dir=&quot;/var/log/weed&quot; -v=4 server -dir=&quot;/path/to/weed/volume&quot; -master.port=9333 -master.volumeSizeLimitMB=30000 -volume.port=8083 -volume.max=&quot;7&quot; -pulseSeconds=60 -idleTimeout=86400 &amp;
 </code></pre>
 
+<h3 id="_2">启动参数说明<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><code>weed -log_dir</code>
+<code>WeedFS</code> 运行日志文件目录（目录必须存在）。</p>
+</li>
+<li>
+<p><code>weed -v</code>
+输出到日志文件的日志级别。</p>
+</li>
+<li>
+<p><code>weed server -dir</code>
+<code>WeedFS</code> server 存储路径。</p>
+</li>
+<li>
+<p><code>weed server -master.port</code>
+<code>WeedFS</code> master 端口。</p>
+</li>
+<li>
+<p><code>weed server -master.volumeSizeLimitMB</code>
+每个 <code>volume</code> 的容量限制。</p>
+</li>
+<li>
+<p><code>weed server -volume.port</code>
+<code>WeedFS</code> server 端口。</p>
+</li>
+<li>
+<p><code>weed server -volume.max</code>
+<code>WeedFS</code> server <code>volume</code> 最大数量。</p>
+</li>
+<li>
+<p><code>weed server -pulseSeconds</code>
+<code>WeedFS</code> server 心跳周期。</p>
+</li>
+<li>
+<p><code>weed server -idleTimeout</code>
+<code>WeedFS</code> server 连接超时（为了减少断开和重新连接带来的系统开销，请设置一个较大的数值）。</p>
+</li>
+</ul>
 <p>更多详细启动参数请查看 <a href="https://github.com/chrislusf/seaweedfs/wiki">SeaweedFS wiki</a></p>
-<h2 id="logful-api">Logful API 服务部署</h2>
+<h2 id="logful-api">Logful API 服务部署<a class="headerlink" href="#logful-api" title="Permanent link">&para;</a></h2>
 <pre><code class="bash">$ cd /path
 $ wget https://github.com/logful/logful-api/releases/download/v0.2.0-beta/logful-api-0.2.0-beta.zip
 $ unzip logful-api-0.2.0-beta.zip
@@ -305,7 +344,142 @@ $ vim application.conf
 $ nohup java -Xms512m -Xmx1024m -jar logful-api-0.2.0-beta.jar --spring.config.location=/path/logful-api-0.2.0-beta/application.conf &amp;
 </code></pre>
 
-<h2 id="logful-web">Logful Web 服务部署</h2>
+<h3 id="_3">配置参数说明<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><code>logful.ttl</code>
+日志文件自动删除时间（具体设置请参考下方表格 <code>q-1-1</code>）。</p>
+</li>
+<li>
+<p><code>logful.path</code>
+程序运行临时目录。</p>
+</li>
+<li>
+<p><code>logful.parser.max-threads</code>
+日志文件解析线程池大小。</p>
+</li>
+<li>
+<p><code>logful.parser.queue-capacity</code>
+日志文件解析队列最大容量。</p>
+</li>
+<li>
+<p><code>logful.graylog.host</code>
+指定 <code>Graylog</code> <code>GELF TCP</code> <code>Input</code> 地址。</p>
+</li>
+<li>
+<p><code>logful.graylog.port</code>
+指定 <code>Graylog</code> <code>GELF TCP</code> <code>Input</code> 端口。</p>
+</li>
+<li>
+<p><code>logful.graylog.connect-timeout</code>
+设置 <code>Graylog</code> <code>GELF TCP</code> <code>Input</code> 连接超时（单位：秒）。</p>
+</li>
+<li>
+<p><code>logful.graylog.reconnect-delay</code>
+重新连接 <code>Graylog</code> <code>GELF TCP</code> <code>Input</code> 间隔（单位：秒）。</p>
+</li>
+<li>
+<p><code>logful.graylog.queue-capacity</code>
+写入 <code>Graylog</code> 消息队列最大容量。</p>
+</li>
+<li>
+<p><code>logful.graylog.send-buffer-size</code>
+设置 <code>Graylog TCP</code> 发送缓冲区大小。</p>
+</li>
+<li>
+<p><code>logful.weed.master.host</code>
+指定 <code>WeedFS</code> master 地址。</p>
+</li>
+<li>
+<p><code>logful.weed.master.port</code>
+指定 <code>WeedFS</code> master 端口。</p>
+</li>
+<li>
+<p><code>logful.weed.connect-timeout</code>
+设置 <code>WeedFS</code> 连接超时（单位：秒）。</p>
+</li>
+<li>
+<p><code>logful.weed.reconnect-delay</code>
+重新连接 <code>WeedFS</code> 间隔（单位：秒）。</p>
+</li>
+<li>
+<p><code>logful.weed.queue-capacity</code>
+写入 <code>WeedFS</code> 文件队列最大容量。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>logful.ttl 参数设置 q-1-1</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单位</td>
+<td>m</td>
+<td>h</td>
+<td>d</td>
+<td>w</td>
+<td>M</td>
+<td>y</td>
+</tr>
+<tr>
+<td>指代</td>
+<td>minutes</td>
+<td>hours</td>
+<td>days</td>
+<td>weeks</td>
+<td>months</td>
+<td>years</td>
+</tr>
+<tr>
+<td>示例</td>
+<td>3m</td>
+<td>4h</td>
+<td>5d</td>
+<td>6w</td>
+<td>7M</td>
+<td>8y</td>
+</tr>
+<tr>
+<td>解析结果</td>
+<td>3 minutes</td>
+<td>4 hours</td>
+<td>5 days</td>
+<td>6 weeks</td>
+<td>7 months</td>
+<td>8 years</td>
+</tr>
+</tbody>
+</table>
+<p>示例：</p>
+<pre><code>logful.ttl=2d
+logful.path=/path/data
+
+logful.parser.max-threads=16
+logful.parser.queue-capacity=2048
+
+logful.graylog.host=127.0.0.1
+logful.graylog.port=12201
+logful.graylog.connect-timeout=5000
+logful.graylog.reconnect-delay=10000
+logful.graylog.queue-capacity=2048
+logful.graylog.send-buffer-size=1048576
+
+logful.weed.master.host=127.0.0.1
+logful.weed.master.port=9333
+logful.weed.connect-timeout=5000
+logful.weed.reconnect-delay=10000
+logful.weed.queue-capacity=2048
+</code></pre>
+
+<h2 id="logful-web">Logful Web 服务部署<a class="headerlink" href="#logful-web" title="Permanent link">&para;</a></h2>
 <pre><code class="bash">$ npm install pm2 -g
 $ cd /path
 $ wget https://github.com/logful/logful-web/releases/download/v0.2.0-beta/logful-web-0.2.0-beta.zip
@@ -316,6 +490,30 @@ $ vim config/config.js
 ...
 $ pm2 start app.js
 </code></pre>
+
+<h3 id="_4">配置参数说明<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><code>config.security.username</code>
+管理员名称。</p>
+</li>
+<li>
+<p><code>config.security.password</code>
+管理员密码（sha-256 字符串）。</p>
+</li>
+<li>
+<p><code>config.locale</code>
+未指定 <code>Accept-Language</code> 时默认的语言。</p>
+</li>
+<li>
+<p><code>config.logfulApi</code>
+指定 <code>Logful-api</code> 地址。</p>
+</li>
+<li>
+<p><code>config.weedMaster</code>
+指定 <code>WeedFS</code> master 地址。</p>
+</li>
+</ul>
               
             </div>
           </div>
