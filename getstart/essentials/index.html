@@ -85,11 +85,11 @@
                 
                     <li><a class="toctree-l4" href="#uid">UID</a></li>
                 
-                    <li><a class="toctree-l4" href="#_1">日志级别</a></li>
+                    <li><a class="toctree-l4" href="#_1">别名支持</a></li>
                 
-                    <li><a class="toctree-l4" href="#_2">日志模板</a></li>
+                    <li><a class="toctree-l4" href="#_2">日志级别</a></li>
                 
-                    <li><a class="toctree-l4" href="#_3">别名支持</a></li>
+                    <li><a class="toctree-l4" href="#_3">日志模板</a></li>
                 
                     <li><a class="toctree-l4" href="#_4">更多内容</a></li>
                 
@@ -206,7 +206,13 @@
                 <h1 id="essentials">Essentials<a class="headerlink" href="#essentials" title="Permanent link">&para;</a></h1>
 <p>通过前面的 Step-by-step 示例，您应该已经初步了解了 Logful 是怎样运作的。当然，这些并非是全部。在继续了解 Android、iOS 和 Web 侧更多内容前，有必要先一些重要的、共性的技术内容。</p>
 <h2 id="uid">UID<a class="headerlink" href="#uid" title="Permanent link">&para;</a></h2>
-<h2 id="_1">日志级别<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>每个Logful日志应用都通过一个唯一的UID进行标识，形式为32位字符串：
+<code>b0806c9eff66402daec954ba3a40a78b</code></p>
+<p>注：一个终端上的多个应用，分别维护不同的Logful UID。</p>
+<p>通过Graylog日志检索或者其他方式定位到UID后，即可在Logful Web上通过UID查询完整的日志文件。</p>
+<h2 id="_1">别名支持<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>为了简化UID的定位工作，Logful提供了别名机制，允许第三方应用为Logful UID绑定一个特定ID（如注册用户的内部uid、或者email等标识）。这样，在排查问题时，只要知道问题用户的uid或email等别名信息，即可在Logful Web上查询到Logful UID，从而查询相应的日志文件。</p>
+<h2 id="_2">日志级别<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p><code>verbose</code> <code>level</code> <code>1</code> 详细的日志信息</p>
@@ -230,7 +236,7 @@
 <p><code>fatal</code> <code>level</code> <code>7</code> 程序无法继续正常运行的严重错误</p>
 </li>
 </ul>
-<h2 id="_2">日志模板<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_3">日志模板<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>模板内容</p>
 <p><code>s,status_code,%n|r,response,%s</code></p>
 <p>消息内容</p>
@@ -255,10 +261,9 @@ col_3: &quot;t:timestamp&quot;
 </ol>
 </li>
 </ul>
-<h2 id="_3">别名支持<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <h2 id="_4">更多内容<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>关于 Android 平台更多内容，请移步至 <a href="../../android/guide/">Android Guide</a></p>
-<p>关于 Android 平台更多内容，请移步至 <a href="../../ios/guide/">iOS Guide</a></p>
+<p>关于 Android 平台更多内容，请移步至 <a href="../../android/guide/">Logful Android Guide</a></p>
+<p>关于 Android 平台更多内容，请移步至 <a href="../../ios/guide/">Logful iOS Guide</a></p>
 <p>关于 Logful Web 更多功能，请移步至 <a href="../../web/guide/">Logful Web Guide</a></p>
 <p>关于 Graylog 使用方面更多内容，请移步至 <a href="http://docs.graylog.org/en/1.2/">Graylog Documentation</a></p>
               
