@@ -80,7 +80,7 @@
                 
                     <li><a class="toctree-l4" href="#ios-xcode">iOS Xcode 集成</a></li>
                 
-                    <li><a class="toctree-l4" href="#_2">日志检索和管理</a></li>
+                    <li><a class="toctree-l4" href="#_2">应用管理和操作</a></li>
                 
             
             </ul>
@@ -91,13 +91,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../essentials/">Essentials</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../demo/">Demo</a>
         
     </li>
 
@@ -207,22 +200,17 @@
             <div class="section">
               
                 <h1 id="start-logging">Start Logging<a class="headerlink" href="#start-logging" title="Permanent link">&para;</a></h1>
-<p>一旦完成了 Logful 日志服务部署，接下来就可以在客户端进行日志记录了。在本节中，您可以看到如何在 Android 和 iOS 客户端中正确集成 Logful SDK，并进行日志记录工作。同时在本节最后，可以看到日志如何在服务端被查询、检索和使用。</p>
+<p>完成了 Logful 日志服务部署，接下来就可以在客户端进行日志记录了。在本节中，您可以看到如何在 Android 和 iOS 客户端中正确集成 Logful SDK，并进行日志记录工作。同时在本节最后，可以看到日志如何在服务端被查询、检索和使用。</p>
 <h2 id="android-studio">Android Studio 集成<a class="headerlink" href="#android-studio" title="Permanent link">&para;</a></h2>
-<p>首先在 build.gradle 中添加 logful 的库文件依赖：</p>
+<p>首先在 build.gradle 中添加 logful 的库依赖：</p>
 <pre><code>dependencies {
     ...
-    compile('com.getui:logful:0.2.0')
+    compile('com.getui:logful:0.3.0')
     ...
 }
 </code></pre>
 
-<p>在assets中放置 <code>logful.properties</code> 文件，配置 Logful API 日志服务地址（此处地址和端口需要和上节Logful API服务部署的地址保持一致）：</p>
-<pre><code>baseUrl=http://&lt;logful-api-hostname&gt;:9600
-</code></pre>
-
-<h3 id="logful-android-sdk">使用 Logful Android SDK<a class="headerlink" href="#logful-android-sdk" title="Permanent link">&para;</a></h3>
-<p>在应用初始化代码中对 Logful SDK 进行初始化：</p>
+<p>在 Application 入口文件 onCreate 方法初始化 SDK：</p>
 <pre><code class="java">import android.app.Application;
 
 import com.getui.logful.LoggerConfigurator;
@@ -235,36 +223,51 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // Logful初始化
-        LoggerFactory.init(this);
+        LoggerConfigurator.Builder builder = LoggerConfigurator.newBuilder();
+        // 设置 Api 地址
+        LoggerFactory.setApiUrl(&quot;YOUR_API_BASE_URL&quot;);
+        // 设置 AppKey
+        LoggerFactory.setAppKey(&quot;YOUR_APP_KEY&quot;);
+        // 设置 AppSecret
+        LoggerFactory.setAppSecret(&quot;YOUR_APP_SECRET&quot;);
+        // 初始化 SDK
+        LoggerFactory.init(this, builder.build());
     }
 }
 </code></pre>
 
-<p>然后就可以在需要进行日志记录的地方打日志了：</p>
-<pre><code class="java">// 使用默认 logger
+<p>使用 logger 打印日志：</p>
+<pre><code class="java">// 使用默认 logger 打印 debug 级别日志
 LoggerFactory.debug(&quot;tag&quot;, &quot;some|debug|message&quot;);
+
+// 使用自定义的 logger 打印 debug 级别日志
+Logger logger = LoggerFactory.logger(&quot;sample&quot;);
+logger.debug(&quot;tag&quot;, &quot;some|debug|message&quot;);
+
 </code></pre>
 
-<p>或者在特定的代码点进行模板指定和截图捕获：</p>
-<pre><code class="java">// 第三个参数为true表示需要同时进行截图保存
-LoggerFactory.verbose(&quot;tag&quot;, &quot;some|t:key|checkpoint|n:2&quot;, true);
+<p>打印带有截图的日志：</p>
+<pre><code class="java">// 第三个参数为 true 表示需要同时进行截图保存
+LoggerFactory.verbose(&quot;tag&quot;, &quot;some|key|checkpoint&quot;, true);
 </code></pre>
 
-<p>编译运行后，日志便会定期上传至服务端（默认为每小时上传一次）</p>
+<p>开启 debug 调试模式</p>
+<pre><code class="java">LoggerFactory.setDebug(true);
+</code></pre>
+
 <h2 id="ios-xcode">iOS Xcode 集成<a class="headerlink" href="#ios-xcode" title="Permanent link">&para;</a></h2>
-<h3 id="cocoapods">CocoaPods 集成方式<a class="headerlink" href="#cocoapods" title="Permanent link">&para;</a></h3>
+<h3 id="cocoapods">CocoaPods 集成<a class="headerlink" href="#cocoapods" title="Permanent link">&para;</a></h3>
 <p>如果还没有安装 CocoaPods，请在终端执行如下指令进行安装：</p>
 <pre><code class="bash">$ sudo gem install cocoapods
 $ pod setup
 </code></pre>
 
 <p>进入工程根目录，创建或者编辑 Podfile 文件并添加 Logful 依赖：</p>
-<pre><code class="bash">$ cd /path/to/&lt;YourProject&gt;
+<pre><code class="bash">$ cd /path/to/YourProject
 $ touch Podfile
 $ vim Podfile
 platform :ios 
-pod 'Logful', '~&gt; 0.2.0'
+pod 'Logful', '~&gt; 0.3.0'
 </code></pre>
 
 <p>安装依赖：</p>
@@ -272,20 +275,19 @@ pod 'Logful', '~&gt; 0.2.0'
 </code></pre>
 
 <p>打开工程根目录下的 .xcworkspace 文件：</p>
-<pre><code class="bash">$ open &lt;YourProject&gt;.xcworkspace
+<pre><code class="bash">$ open YourProject.xcworkspace
 </code></pre>
 
-<h3 id="_1">直接添加工程集成方式<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<h3 id="_1">直接添加工程集成<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <p>把 Logful iOS SDK 添加为 submodule：</p>
 <pre><code class="bash">$ cd /path/to/YourProject
 $ git submodule add git@github.com:logful/logful-ios.git
 $ git submodule update --init --recursive
 </code></pre>
 
-<p>在项目Linked Frameworks and Libraries设置中添加以下依赖：
-libsqlite3、libz、MobileCoreServices.framework、SystemConfiguration.framework、Openssl.framework。</p>
+<p>添加 libsqlite3、libz、MobileCoreServices.framework、SystemConfiguration.framework、Openssl.framework。</p>
 <h3 id="logful-ios-sdk">使用 Logful iOS SDK<a class="headerlink" href="#logful-ios-sdk" title="Permanent link">&para;</a></h3>
-<p>初始化 SDK，配置logful API地址：</p>
+<p>初始化 SDK：</p>
 <pre><code class="objc">#import &quot;AppDelegate.h&quot;
 #import &lt;Logful/Logful.h&gt;
 
@@ -297,8 +299,18 @@ libsqlite3、libz、MobileCoreServices.framework、SystemConfiguration.framework
 
 - (BOOL)application:(UIApplication *)application 
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [GTLoggerFactory init];
-    [GTLoggerFactory setApiUrl:@&quot;http://demo.logful.aoapp.com:9600&quot;];
+    GTLoggerConfigurator *config = [GTLoggerConfigurator configWithBlock:^(ConfiguratorBuilder *builder) {
+        builder.defaultLoggerName = @&quot;sample&quot;;
+        builder.caughtException = NO;
+    }];
+    // 设置 Api 地址
+    [GTLoggerFactory setApiUrl:@&quot;YOUR_API_BASE_URL&quot;];
+    // 设置 AppKey
+    [GTLoggerFactory setAppKey:@&quot;YOUR_APP_KEY&quot;];
+    // 设置 AppSecret
+    [GTLoggerFactory setAppSecret:@&quot;YOUR_APP_SECRET&quot;];
+    // 初始化 SDK
+    [GTLoggerFactory initWithConfig:config];
     return YES;
 }
 </code></pre>
@@ -320,16 +332,24 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 GLOG_DEBUG_CAPTURE(@&quot;TAG&quot;, @&quot;debug message&quot;);
 </code></pre>
 
-<h2 id="_2">日志检索和管理<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>日志文件上传至服务端后，即可使用 Logful Web 以及 Graylog 提供的日志检索功能，进行日志定位。</p>
-<h3 id="logful-web">Logful Web<a class="headerlink" href="#logful-web" title="Permanent link">&para;</a></h3>
-<p>通过 Logful Web，可以基于 IMEI 查询 UID：</p>
-<p><img alt="查询 UID" src="../../img/logful_uid.png" /></p>
-<p>然后根据 UID 以及日期，查询所有的日志记录：</p>
+<p>开启 debug 调试模式</p>
+<pre><code class="objc">[GTLoggerFactory setDebugMode:YES];
+</code></pre>
+
+<h2 id="_2">应用管理和操作<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="logful-web">Logful Web 基本操作<a class="headerlink" href="#logful-web" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
-<p><code>填入检索条件</code>
-<img alt="填入检索条件" src="../../img/logful_querylog_1.png" /></p>
+<p><code>创建应用</code>
+<img alt="" src="../../img/create_app.png" /></p>
+</li>
+<li>
+<p><code>根据创建的应用信息进行接入</code>
+<img alt="" src="../../img/logful_app_info.png" /></p>
+</li>
+<li>
+<p><code>查询用户</code>
+<img alt="查询 UID" src="../../img/logful_uid.png" /></p>
 </li>
 <li>
 <p><code>获取日志文件列表</code>
@@ -339,14 +359,30 @@ GLOG_DEBUG_CAPTURE(@&quot;TAG&quot;, @&quot;debug message&quot;);
 <p><code>查看日志文件</code>
 <img alt="日志浏览" src="../../img/logful_viewlog.png" /></p>
 </li>
+<li>
+<p><code>获取崩溃日志文件列表</code>
+<img alt="日志浏览" src="../../img/logful_crash.png" /></p>
+</li>
+<li>
+<p><code>推送控制日志系统上传</code>
+<img alt="日志浏览" src="../../img/logful_push_control.png" /></p>
+</li>
 </ul>
-<h3 id="graylog">Graylog<a class="headerlink" href="#graylog" title="Permanent link">&para;</a></h3>
-<p>除了 Logful Web，也可以在 Graylog 上进行更为强大的日志检索。例如，根据 Package Name 检索所有相关的日志记录：</p>
-<p><img alt="日志检索" src="../../img/logful_search1.png" /></p>
-<p>或者检索错误ID为 <code>80001</code> 的日志记录：</p>
-<p><img alt="日志检索" src="../../img/logful_search2.png" /></p>
-<p>甚至可以根据特定字段的数值，生成专有的实时数据图表：</p>
-<p><img alt="日志监控" src="../../img/logful_monitor.png" /></p>
+<h3 id="graylog">Graylog 日志检索<a class="headerlink" href="#graylog" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><code>根据包名为 app_id 查询日志</code>
+<img alt="日志检索" src="../../img/logful_search1.png" /></p>
+</li>
+<li>
+<p><code>检索错误 ID 为 80001 的日志记录</code>
+<img alt="日志检索" src="../../img/logful_search2.png" /></p>
+</li>
+<li>
+<p><code>根据特定字段的数值生成专有的实时数据图表</code>
+<img alt="日志监控" src="../../img/logful_monitor.png" /></p>
+</li>
+</ul>
               
             </div>
           </div>

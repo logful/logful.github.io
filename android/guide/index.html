@@ -82,13 +82,6 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../getstart/demo/">Demo</a>
-        
-    </li>
-
-        
     </ul>
 <li>
           
@@ -217,18 +210,18 @@
 <h3 id="uploadnetworktype">uploadNetworkType<a class="headerlink" href="#uploadnetworktype" title="Permanent link">&para;</a></h3>
 <p>允许用户上传日志的网络类型。</p>
 <p><strong>default</strong>: </p>
-<pre><code class="java">new int[]{Constants.TYPE_WIFI, Constants.TYPE_MOBILE}
+<pre><code class="java">{Constants.TYPE_WIFI, Constants.TYPE_MOBILE}
 </code></pre>
 
 <h3 id="uploadloglevel">uploadLogLevel<a class="headerlink" href="#uploadloglevel" title="Permanent link">&para;</a></h3>
 <p>需要用户上传的日志级别。</p>
 <p><strong>default</strong>: </p>
-<pre><code class="java">new int[]{Constants.VERBOSE, Constants.DEBUG, Constants.INFO, Constants.WARN, Constants.ERROR, Constants.EXCEPTION, Constants.FATAL}
+<pre><code class="java">{Constants.VERBOSE, Constants.DEBUG, Constants.INFO, Constants.WARN, Constants.ERROR, Constants.EXCEPTION, Constants.FATAL}
 </code></pre>
 
 <h3 id="deleteuploadedlogfile">deleteUploadedLogFile<a class="headerlink" href="#deleteuploadedlogfile" title="Permanent link">&para;</a></h3>
 <p>是否删除已经上传的日志文件。</p>
-<p><strong>default</strong>: <code>NO</code></p>
+<p><strong>default</strong>: <code>false</code></p>
 <h3 id="activelogwriter">activeLogWriter<a class="headerlink" href="#activelogwriter" title="Permanent link">&para;</a></h3>
 <p>同时写入的日志文件数量。</p>
 <p><strong>default</strong>: <code>2</code></p>
@@ -247,6 +240,9 @@
 <h3 id="screenshotscale">screenshotScale<a class="headerlink" href="#screenshotscale" title="Permanent link">&para;</a></h3>
 <p>屏幕截图缩放比例（范围：0.1 ~ 1.0）。</p>
 <p><strong>default</strong>: <code>0.5</code></p>
+<h3 id="securityprovider">securityProvider<a class="headerlink" href="#securityprovider" title="Permanent link">&para;</a></h3>
+<p>定义用于生成 AES 密钥的 Password 和 Salt</p>
+<p><strong>default</strong>: <code>DefaultSecurityProvider</code></p>
 <h2 id="logger">Logger定义<a class="headerlink" href="#logger" title="Permanent link">&para;</a></h2>
 <pre><code class="java">Logger logger = LoggerFactory.logger(&quot;your_logger_name&quot;);
 </code></pre>
@@ -271,7 +267,7 @@
         <a href="../api/" class="btn btn-neutral float-right" title="API Reference"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../getstart/demo/" class="btn btn-neutral" title="Demo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../getstart/essentials/" class="btn btn-neutral" title="Essentials"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -297,7 +293,7 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../getstart/demo/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../getstart/essentials/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../api/" style="color: #fcfcfc">Next &raquo;</a></span>
